@@ -1,0 +1,23 @@
+file = open('codingal.txt', 'r')
+print("reading the first line...")
+print(file.readline())
+file.close()
+
+file = open('codingal.txt', 'r')
+print("reading multiple lines...")
+print(file.readline())
+print(file.readline())
+print(file.readline())
+file.close()
+
+file = open('codingal.txt', 'r')
+print("looping through the lines")
+for line in file:
+    print(line)
+file.close()
+
+file = open('codingal.txt', 'r')
+print("reading all the lines")
+for f in file.readlines():
+    print(f)
+file.close()

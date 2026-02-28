@@ -1,0 +1,89 @@
+import random
+import tkinter as tk
+
+# Function to determine winner
+def determine_winner(user, computer):
+    if user == computer:
+        return "It's a Tie!"
+    elif (user == "Rock" and computer == "Scissors") or \
+         (user == "Paper" and computer == "Rock") or \
+         (user == "Scissors" and computer == "Paper"):
+        return "You Win!"
+    else:
+        return "Computer Wins!"
+
+# Function when user clicks a button
+def play(user_choice):
+    global user_score, computer_score, rounds_played
+
+    if rounds_played >= 5:
+        result_label.config(text="Game Over! Click Reset to play again.")
+        return
+
+    computer_choice = random.choice(["Rock", "Paper", "Scissors"])
+    winner = determine_winner(user_choice, computer_choice)
+
+    rounds_played += 1
+
+    if winner == "You Win!":
+        user_score += 1
+    elif winner == "Computer Wins!":
+        computer_score += 1
+
+    user_label.config(text=f"You chose: {user_choice}")
+    computer_label.config(text=f"Computer chose: {computer_choice}")
+    result_label.config(text=winner)
+    score_label.config(text=f"Score - You: {user_score}  Computer: {computer_score}  Round: {rounds_played}/5")
+
+# Reset function
+def reset_game():
+    global user_score, computer_score, rounds_played
+    user_score = 0
+    computer_score = 0
+    rounds_played = 0
+    user_label.config(text="")
+    computer_label.config(text="")
+    result_label.config(text="")
+    score_label.config(text="Score - You: 0  Computer: 0  Round: 0/5")
+
+# Initialize scores
+user_score = 0
+computer_score = 0
+rounds_played = 0
+
+# Create window
+root = tk.Tk()
+root.title("Rock Paper Scissors")
+root.geometry("400x400")
+
+title = tk.Label(root, text="Rock Paper Scissors", font=("Arial", 16, "bold"))
+title.pack(pady=10)
+
+user_label = tk.Label(root, text="", font=("Arial", 12))
+user_label.pack()
+
+computer_label = tk.Label(root, text="", font=("Arial", 12))
+computer_label.pack()
+
+result_label = tk.Label(root, text="", font=("Arial", 14, "bold"))
+result_label.pack(pady=10)
+
+score_label = tk.Label(root, text="Score - You: 0  Computer: 0  Round: 0/5", font=("Arial", 10))
+score_label.pack(pady=5)
+
+button_frame = tk.Frame(root)
+button_frame.pack(pady=20)
+
+rock_btn = tk.Button(button_frame, text="Rock", width=10, command=lambda: play("Rock"))
+rock_btn.grid(row=0, column=0, padx=5)
+
+paper_btn = tk.Button(button_frame, text="Paper", width=10, command=lambda: play("Paper"))
+paper_btn.grid(row=0, column=1, padx=5)
+
+scissors_btn = tk.Button(button_frame, text="Scissors", width=10, command=lambda: play("Scissors"))
+scissors_btn.grid(row=0, column=2, padx=5)
+
+reset_btn = tk.Button(root, text="Reset Game", command=reset_game)
+reset_btn.pack(pady=10)
+
+root.mainloop()
